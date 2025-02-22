@@ -1,0 +1,58 @@
+
+import { useParams } from "react-router-dom";
+import { submissions } from "@/data/mockData";
+import { VideoPlayer } from "./VideoPlayer";
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
+
+export const SubmissionScreen = () => {
+  const { id } = useParams();
+  const submission = submissions.find((s) => s.id === id);
+
+  if (!submission) return <div>Submission not found</div>;
+
+  return (
+    <div className="max-w-6xl mx-auto py-8 px-4 space-y-8">
+      <div className="aspect-video w-full overflow-hidden rounded-lg bg-black">
+        <VideoPlayer url={submission.video} />
+      </div>
+      
+      <Card className="p-6 bg-card/80 backdrop-blur-sm">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="aspect-square rounded-lg overflow-hidden">
+            <img
+              src={submission.image}
+              alt={submission.actorName}
+              className="w-full h-full object-cover"
+            />
+          </div>
+          
+          <div className="md:col-span-2 space-y-6">
+            <div>
+              <h1 className="text-3xl font-bold mb-2">{submission.actorName}</h1>
+              <p className="text-muted-foreground">Age: {submission.age}</p>
+            </div>
+            
+            <div>
+              <h2 className="text-xl font-semibold mb-3">Skills & Expertise</h2>
+              <div className="flex flex-wrap gap-2">
+                {submission.skills.map((skill) => (
+                  <Badge key={skill} variant="secondary">
+                    {skill}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+            
+            <div>
+              <h2 className="text-xl font-semibold mb-3">Performance Summary</h2>
+              <p className="text-muted-foreground leading-relaxed">
+                {submission.performanceSummary}
+              </p>
+            </div>
+          </div>
+        </div>
+      </Card>
+    </div>
+  );
+};
