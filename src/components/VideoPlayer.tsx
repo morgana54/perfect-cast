@@ -84,7 +84,7 @@ export const VideoPlayer = ({ url }: VideoPlayerProps) => {
   };
 
   return (
-    <div className="relative group">
+    <div className="relative group w-full h-full">
       <video
         ref={videoRef}
         src={videoUrl}
@@ -97,7 +97,7 @@ export const VideoPlayer = ({ url }: VideoPlayerProps) => {
       <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         <div 
           ref={progressBarRef}
-          className="h-1 w-full bg-gray-600 cursor-pointer"
+          className="h-1 w-full bg-gray-600 cursor-pointer mb-0"
           onClick={handleProgressBarClick}
         >
           <div 
