@@ -85,7 +85,11 @@ export const Submit = () => {
     await onStart();
   }, [onStart, onStop]);
 
+  const previousScreenplayIdx = useRef(screenplayIdx);
   useEffect(() => {
+    if (previousScreenplayIdx.current === screenplayIdx) return;
+
+    previousScreenplayIdx.current = screenplayIdx;
     onStop();
   }, [onStop, screenplayIdx]);
 
