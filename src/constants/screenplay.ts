@@ -19,12 +19,16 @@ export interface Screenplay {
   originalScene: string;
   context: SceneContext;
   scene: string;
+  userRole: string;
+  agentRole: string;
 }
 
 export const SCREENPLAYS: Screenplay[] = [
   {
     title: "Star Wars",
     genre: "Sci-Fi",
+    userRole: "LUKE",
+    agentRole: "BEN",
     originalScene: `INT. LARS HOMESTEAD - GARAGE AREA - LATE AFTERNOON
 
                The hot winds of the desert blow through the garage while Luke and 
@@ -55,19 +59,17 @@ export const SCREENPLAYS: Screenplay[] = [
       sceneContext:
         "This pivotal scene occurs after Ben has saved Luke from the Sand People. Ben begins to reveal the truth about Luke's father, carefully navigating between honesty and protecting Luke from the full, devastating truth.",
     },
-    scene: `BEN: Your father... was seduced by the Dark Side of the Force. He ceased to be Anakin Skywalker and "became" Darth Vader. When that happened, the good man who was your father was destroyed. So what I told you was true... from a certain point of view.
+    scene: `BEN: Your father was seduced by the Dark Side of the Force. He ceased to be Anakin Skywalker and became Darth Vader.
 LUKE: (turning away, anger rising) A certain point of view!
 BEN: Luke, you're going to find that many of the truths we cling to depend greatly on our own point of view.
-LUKE: What does that even mean?
-BEN: When I first knew your father, he was already a great pilot. But I was amazed how strongly the Force was with him. I took it upon myself to train him as a Jedi.
 LUKE: I wish I'd known him.
-BEN: He was the best star pilot in the galaxy, and a cunning warrior. And he was a good friend.
-LUKE: How did my father die?
-BEN: A young Jedi named Darth Vader, who was a pupil of mine until he turned to evil, helped the Empire hunt down and destroy the Jedi Knights.`,
+BEN: He was the best star pilot in the galaxy, and a good friend.`,
   },
   {
     title: "A Scanner Darkly",
     genre: "Sci-Fi Thriller",
+    userRole: "CHARLES FRECK",
+    agentRole: "JERRY FABIN",
     originalScene: `INT. JERRY'S HOUSE - DAY
 
                The suburban house is dimly lit, with newspapers covering all the 
@@ -101,19 +103,16 @@ BEN: A young Jedi named Darth Vader, who was a pupil of mine until he turned to 
     },
     scene: `JERRY FABIN: I got to get the aphids. They're everywhere!
 CHARLES FRECK: I don't see any aphids. What's an aphid?
-JERRY FABIN: It eventually kills you. That's what an aphid is. They're in my hair and my skin and my lungs. The goddamn pain is unbearable.
-CHARLES FRECK: How come I can't see them?
-JERRY FABIN: You're looking right at them! Right there on the wall!
+JERRY FABIN: It eventually kills you. They're in my hair and my skin and my lungs.
 CHARLES FRECK: Maybe we should get you to a doctor.
 JERRY FABIN: They won't help. The doctors are in on it. They're the ones who put them there.
-CHARLES FRECK: Jerry, you're not making any sense.
-JERRY FABIN: I need to take another shower. They're all over me again.
-CHARLES FRECK: That's your fifth shower today!
-JERRY FABIN: The only way to get them off is to shower. Keep showering. Never stop showering.`,
+CHARLES FRECK: That's your fifth shower today!`,
   },
   {
     title: "Aladdin",
     genre: "Animation",
+    userRole: "CUSTOMER",
+    agentRole: "PEDDLER",
     originalScene: `INT. MARKETPLACE - AGRABAH - DAY
 
                The bustling marketplace of Agrabah is filled with vendors and 
@@ -147,19 +146,17 @@ JERRY FABIN: The only way to get them off is to shower. Keep showering. Never st
     },
     scene: `PEDDLER: Ah, Salaam and good evening to you, worthy friend! Please, please, come closer.
 CUSTOMER: (steps forward)
-PEDDLER: Too close! A little too close. There. Welcome to Agrabah, city of mystery, of enchantment, and the finest merchandise this side of the river Jordan!
+PEDDLER: Too close! Welcome to Agrabah, city of mystery and enchantment!
 CUSTOMER: (looks interested)
-PEDDLER: Look at this! Yes! Combination hookah and coffee maker--also makes Julienne fries. Will not break! (taps it on table) Will not... (it breaks) It broke.
-CUSTOMER: (turns to leave)
-PEDDLER: Wait, don't go! I can see you're only interested in the exceptionally rare. I think you would be most rewarded to consider... this.
+PEDDLER: Look at this! Combination hookah and coffee maker--also makes Julienne fries. Will not break! (it breaks) It broke.
 CUSTOMER: What's that?
-PEDDLER: This is no ordinary lamp! It once changed the course of a young man's life. A young man who, like this lamp, was more than what he seemed: a diamond in the rough.
-CUSTOMER: Tell me more.
-PEDDLER: Listen carefully, my friend, as I tell you a tale that will make you believe in magic...`,
+PEDDLER: This is no ordinary lamp! It once changed the course of a young man's life.`,
   },
   {
     title: "17 Again",
     genre: "Comedy",
+    userRole: "NED",
+    agentRole: "MIKE",
     originalScene: `INT. NED'S HOUSE - LIVING ROOM - NIGHT
 
                The room is filled with memorabilia from high school glory days. 
@@ -191,21 +188,18 @@ PEDDLER: Listen carefully, my friend, as I tell you a tale that will make you be
       sceneContext:
         "After experiencing his youth again through magical means, Mike finally realizes that his original life choices were the right ones. This scene marks his emotional growth and acceptance of his past decisions.",
     },
-    scene: `MIKE: You were right. I peaked in high school. I did. And you know what? I don't care. Because I had you, and Maggie, and Alex and Nicole. And if I had to do it all over again, I wouldn't change a thing.
+    scene: `MIKE: You were right. I peaked in high school. But you know what? I don't care. Because I had you, and Maggie, and Alex and Nicole.
 NED: You're not going to kiss me, are you?
 MIKE: No, but I am going to hug you.
 NED: Oh, no. No, no, no.
 MIKE: Come here, buddy. You've always been there for me.
-NED: (trying to escape) This is really unnecessary...
-MIKE: Just let it happen. This is happening.
-NED: (resigned) Fine. But this better not awaken anything in me.
-MIKE: You're my best friend, Ned. You know that?
-NED: Yeah, yeah. Just don't tell anyone about this hug.
-MIKE: Too late. I'm totally telling everyone.`,
+NED: (trying to escape) This is really unnecessary...`,
   },
   {
     title: "A Few Good Men",
     genre: "Legal Drama",
+    userRole: "KAFFEE",
+    agentRole: "JESSEP",
     originalScene: `INT. COURTROOM - DAY
 
                The tension in the courtroom is palpable. Col. Jessep sits in the 
@@ -238,64 +232,12 @@ MIKE: Too late. I'm totally telling everyone.`,
       sceneContext:
         "The climactic courtroom scene where Kaffee confronts Jessep about ordering the 'Code Red' that led to the death of PFC Santiago. This is the culmination of Kaffee's transformation from a plea-bargain lawyer to a determined seeker of truth.",
     },
-    scene: `JESSEP
-                         You can't handle the truth!
-
-               And nobody moves.
-
-                                     JESSEP
-                              (continuing)
-                         Son, we live in a world that has 
-                         walls. And those walls have to be 
-                         guarded by men with guns. Who's gonna 
-                         do it? You? You, Lt. Weinberg? I 
-                         have a greater responsibility than 
-                         you can possibly fathom. You weep 
-                         for Santiago and you curse the 
-                         marines. You have that luxury. You 
-                         have the luxury of not knowing what 
-                         I know: That Santiago's death, while 
-                         tragic, probably saved lives. And my 
-                         existence, while grotesque and 
-                         incomprehensible to you, saves lives.
-                              (beat)
-                         You don't want the truth. Because 
-                         deep down, in places you don't talk 
-                         about at parties, you want me on 
-                         that wall. You need me there.
-                              (boasting)
-                         We use words like honor, code, 
-                         loyalty... we use these words as the 
-                         backbone to a life spent defending 
-                         something. You use 'em as a punchline.
-                              (beat)
-                         I have neither the time nor the 
-                         inclination to explain myself to a 
-                         man who rises and sleeps under the 
-                         blanket of the very freedom I provide, 
-                         then questions the manner in which I 
-                         provide it. I'd prefer you just said 
-                         thank you and went on your way. 
-                         Otherwise, I suggest you pick up a 
-                         weapon and stand a post. Either way, 
-                         I don't give a damn what you think 
-                         you're entitled to.
-
-                                     KAFFEE
-                              (quietly)
-                         Did you order the code red?
-
-                                     JESSEP
-                              (beat)
-                         I did the job you sent me to do.
-
-                                     KAFFEE
-                         Did you order the code red?
-
-                                     JESSEP
-                              (pause)
-                         You're goddamn right I did.
-
-               Silence. From everyone.`,
+    scene: `JESSEP: You can't handle the truth! Son, we live in a world that has walls. And those walls have to be guarded by men with guns.
+KAFFEE: Did you order the Code Red?
+JESSEP: I have a greater responsibility than you can possibly fathom. You weep for Santiago and you curse the marines.
+KAFFEE: Did you order the Code Red?
+JESSEP: You want me on that wall. You need me there.
+KAFFEE: (quietly) Did you order the Code Red?
+JESSEP: You're goddamn right I did!`,
   },
 ];
