@@ -2,6 +2,7 @@
 import { useState, useRef } from "react";
 import { Play, Pause, Volume2, VolumeX } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { supabase } from "@/integrations/supabase/client";
 
 interface VideoPlayerProps {
   url: string;
@@ -11,6 +12,11 @@ export const VideoPlayer = ({ url }: VideoPlayerProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  
+  // Get the public URL for the video if it's a Supabase storage path
+  const videoUrl = url.startsWith('https://') 
+    ? url 
+    : `${supabase.storage.from('videos').getPublicUrl(url).data.publicUrl}`;
 
   const togglePlay = () => {
     if (videoRef.current) {
@@ -34,7 +40,7 @@ export const VideoPlayer = ({ url }: VideoPlayerProps) => {
     <div className="relative group">
       <video
         ref={videoRef}
-        src={url}
+        src={videoUrl}
         className="w-full h-full object-cover"
         onClick={togglePlay}
       />
