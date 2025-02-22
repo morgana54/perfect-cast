@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -9,6 +8,7 @@ import { RoleScreen } from "./components/RoleScreen";
 import { SubmissionScreen } from "./components/SubmissionScreen";
 import NotFound from "./pages/NotFound";
 import { motion, AnimatePresence } from "framer-motion";
+import { Submit } from "./pages/Submit/Submit";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +29,7 @@ const App = () => (
               <Route path="/" element={<RoleList />} />
               <Route path="/role/:id" element={<RoleScreen />} />
               <Route path="/submission/:id" element={<SubmissionScreen />} />
+              <Route path="/talent/submit" element={<Submit />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </motion.div>
