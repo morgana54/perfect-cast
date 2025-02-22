@@ -132,6 +132,42 @@ export type Database = {
         }
         Relationships: []
       }
+      submissions: {
+        Row: {
+          age: number | null
+          id: number
+          performance_summary: string | null
+          skills_and_expertise: string[] | null
+          user_image: string | null
+          user_name: string | null
+          user_surname: string | null
+          video_id: string | null
+          video_url: string | null
+        }
+        Insert: {
+          age?: number | null
+          id?: never
+          performance_summary?: string | null
+          skills_and_expertise?: string[] | null
+          user_image?: string | null
+          user_name?: string | null
+          user_surname?: string | null
+          video_id?: string | null
+          video_url?: string | null
+        }
+        Update: {
+          age?: number | null
+          id?: never
+          performance_summary?: string | null
+          skills_and_expertise?: string[] | null
+          user_image?: string | null
+          user_name?: string | null
+          user_surname?: string | null
+          video_id?: string | null
+          video_url?: string | null
+        }
+        Relationships: []
+      }
       video_emotions: {
         Row: {
           angry: number | null
@@ -142,9 +178,9 @@ export type Database = {
           face_id: number | null
           face_name: string | null
           fear: number | null
+          frame_index: string | null
           happy: number | null
           id: number
-          index: string | null
           intensity: number | null
           neutral: number | null
           sad: number | null
@@ -162,9 +198,9 @@ export type Database = {
           face_id?: number | null
           face_name?: string | null
           fear?: number | null
+          frame_index?: string | null
           happy?: number | null
           id?: never
-          index?: string | null
           intensity?: number | null
           neutral?: number | null
           sad?: number | null
@@ -182,9 +218,9 @@ export type Database = {
           face_id?: number | null
           face_name?: string | null
           fear?: number | null
+          frame_index?: string | null
           happy?: number | null
           id?: never
-          index?: string | null
           intensity?: number | null
           neutral?: number | null
           sad?: number | null
