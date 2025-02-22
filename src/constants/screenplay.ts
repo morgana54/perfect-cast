@@ -31,9 +31,9 @@ export const SCREENPLAYS: Screenplay[] = [
     agentRole: "BEN",
     originalScene: `INT. LARS HOMESTEAD - GARAGE AREA - LATE AFTERNOON
 
-               The hot winds of the desert blow through the garage while Luke and 
-               Ben continue their discussion. The old Jedi's eyes have a distant 
-               look in them as he speaks of the past, each word carefully chosen.`,
+The hot winds of the desert blow through the garage while Luke and
+Ben continue their discussion. The old Jedi's eyes have a distant
+look in them as he speaks of the past, each word carefully chosen.`,
     context: {
       setting: "A remote moisture farm on the desert planet of Tatooine",
       characters: {
@@ -61,6 +61,7 @@ export const SCREENPLAYS: Screenplay[] = [
     },
     scene: `BEN: Your father was seduced by the Dark Side of the Force. He ceased to be Anakin Skywalker and became Darth Vader.
 LUKE: (turning away, anger rising) A certain point of view!
+
 BEN: Luke, you're going to find that many of the truths we cling to depend greatly on our own point of view.
 LUKE: I wish I'd known him.
 BEN: He was the best star pilot in the galaxy, and a good friend.`,
@@ -72,10 +73,10 @@ BEN: He was the best star pilot in the galaxy, and a good friend.`,
     agentRole: "JERRY FABIN",
     originalScene: `INT. JERRY'S HOUSE - DAY
 
-               The suburban house is dimly lit, with newspapers covering all the 
-               windows. The furniture is sparse, and what remains is covered in 
-               sticky bug strips. Jerry paces frantically, scratching at his skin 
-               while Charles watches with growing concern.`,
+The suburban house is dimly lit, with newspapers covering all the
+windows. The furniture is sparse, and what remains is covered in
+sticky bug strips. Jerry paces frantically, scratching at his skin
+while Charles watches with growing concern.`,
     context: {
       setting:
         "Near future Southern California, in a society ravaged by the effects of Substance D drug",
@@ -102,9 +103,11 @@ BEN: He was the best star pilot in the galaxy, and a good friend.`,
         "This scene demonstrates the devastating mental effects of Substance D, showing Jerry's complete disconnect from reality through his aphid delusions. It serves as a warning of what awaits other characters in the story.",
     },
     scene: `JERRY FABIN: I got to get the aphids. They're everywhere!
+
 CHARLES FRECK: I don't see any aphids. What's an aphid?
 JERRY FABIN: It eventually kills you. They're in my hair and my skin and my lungs.
 CHARLES FRECK: Maybe we should get you to a doctor.
+
 JERRY FABIN: They won't help. The doctors are in on it. They're the ones who put them there.
 CHARLES FRECK: That's your fifth shower today!`,
   },
@@ -115,10 +118,10 @@ CHARLES FRECK: That's your fifth shower today!`,
     agentRole: "PEDDLER",
     originalScene: `INT. MARKETPLACE - AGRABAH - DAY
 
-               The bustling marketplace of Agrabah is filled with vendors and 
-               customers. The Peddler's small stall stands out with its 
-               collection of exotic merchandise. His eyes twinkle with 
-               mischief as he spots a potential customer approaching.`,
+The bustling marketplace of Agrabah is filled with vendors and
+customers. The Peddler's small stall stands out with its
+collection of exotic merchandise. His eyes twinkle with
+mischief as he spots a potential customer approaching.`,
     context: {
       setting:
         "The magical Arabian city of Agrabah, a land of mystery and enchantment",
@@ -145,11 +148,17 @@ CHARLES FRECK: That's your fifth shower today!`,
         "This opening scene sets up the framing device for the entire movie, where the Peddler introduces the magical tale of Aladdin. His theatrical sales pitch transforms into the narrative vehicle for the story.",
     },
     scene: `PEDDLER: Ah, Salaam and good evening to you, worthy friend! Please, please, come closer.
+
 CUSTOMER: (steps forward)
+
 PEDDLER: Too close! Welcome to Agrabah, city of mystery and enchantment!
+
 CUSTOMER: (looks interested)
+
 PEDDLER: Look at this! Combination hookah and coffee maker--also makes Julienne fries. Will not break! (it breaks) It broke.
+
 CUSTOMER: What's that?
+
 PEDDLER: This is no ordinary lamp! It once changed the course of a young man's life.`,
   },
   {
@@ -159,10 +168,10 @@ PEDDLER: This is no ordinary lamp! It once changed the course of a young man's l
     agentRole: "MIKE",
     originalScene: `INT. NED'S HOUSE - LIVING ROOM - NIGHT
 
-               The room is filled with memorabilia from high school glory days. 
-               Mike stands before Ned, his best friend, finally coming to terms 
-               with the choices he's made in life. The moment is unexpectedly 
-               sincere between the two friends.`,
+The room is filled with memorabilia from high school glory days.
+Mike stands before Ned, his best friend, finally coming to terms
+with the choices he's made in life. The moment is unexpectedly
+sincere between the two friends.`,
     context: {
       setting:
         "Modern day suburban home, during a pivotal moment of self-realization",
@@ -190,9 +199,13 @@ PEDDLER: This is no ordinary lamp! It once changed the course of a young man's l
     },
     scene: `MIKE: You were right. I peaked in high school. But you know what? I don't care. Because I had you, and Maggie, and Alex and Nicole.
 NED: You're not going to kiss me, are you?
+
 MIKE: No, but I am going to hug you.
+
 NED: Oh, no. No, no, no.
+
 MIKE: Come here, buddy. You've always been there for me.
+
 NED: (trying to escape) This is really unnecessary...`,
   },
   {
@@ -202,10 +215,10 @@ NED: (trying to escape) This is really unnecessary...`,
     agentRole: "JESSEP",
     originalScene: `INT. COURTROOM - DAY
 
-               The tension in the courtroom is palpable. Col. Jessep sits in the 
-               witness stand, his military bearing evident even under pressure. 
-               Lt. Kaffee stands at the podium, young but determined, knowing 
-               he's about to risk everything on this line of questioning.`,
+The tension in the courtroom is palpable. Col. Jessep sits in the
+witness stand, his military bearing evident even under pressure.
+Lt. Kaffee stands at the podium, young but determined, knowing
+he's about to risk everything on this line of questioning.`,
     context: {
       setting:
         "Military courtroom in Washington D.C., during a court-martial proceeding",
@@ -234,10 +247,15 @@ NED: (trying to escape) This is really unnecessary...`,
     },
     scene: `JESSEP: You can't handle the truth! Son, we live in a world that has walls. And those walls have to be guarded by men with guns.
 KAFFEE: Did you order the Code Red?
+
 JESSEP: I have a greater responsibility than you can possibly fathom. You weep for Santiago and you curse the marines.
+
 KAFFEE: Did you order the Code Red?
+
 JESSEP: You want me on that wall. You need me there.
+
 KAFFEE: (quietly) Did you order the Code Red?
+
 JESSEP: You're goddamn right I did!`,
   },
 ];

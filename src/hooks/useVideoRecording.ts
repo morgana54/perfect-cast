@@ -1,58 +1,85 @@
+import { useSupabaseUpload } from "@/supabase/useUpload";
 import { useState, useRef, useCallback } from "react";
-import { toast } from "sonner";
+
+export type RecordingState =
+  | {
+      type: "stopped";
+    }
+  | {
+      type: "recording";
+    }
+  | {
+      type: "recorded";
+      blob: Blob | null;
+    };
 
 export const useVideoRecording = () => {
-  const [isRecording, setIsRecording] = useState(false);
+  const [recordingState, setRecordingState] = useState<RecordingState>({
+    type: "stopped",
+  });
+  const isRecording = recordingState.type === "recording";
+
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
+  const currentRecordingRef = useRef<PromiseWithResolvers<Blob> | null>(null);
 
   const startRecording = useCallback(() => {
     if (mediaRecorderRef.current && !isRecording) {
       mediaRecorderRef.current.start();
-      setIsRecording(true);
-      toast.success("Recording started");
+      setRecordingState({ type: "recording" });
     }
   }, [isRecording]);
 
-  const stopRecording = useCallback(() => {
+  const { uploadFile } = useSupabaseUpload();
+
+  const stopRecording = useCallback(async () => {
     if (mediaRecorderRef.current && isRecording) {
       mediaRecorderRef.current.stop();
-      setIsRecording(false);
-      toast.success("Recording stopped");
+
+      setRecordingState({ type: "recorded", blob: null });
+      const blob = (await currentRecordingRef.current?.promise) ?? null;
+      setRecordingState({ type: "recorded", blob });
     }
   }, [isRecording]);
 
-  const handleVideoSave = useCallback(async (blob: Blob) => {
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `recording-${new Date().toISOString()}.webm`;
-    a.click();
-    URL.revokeObjectURL(url);
+  const setupMediaRecorder = useCallback((stream: MediaStream) => {
+    mediaRecorderRef.current = new MediaRecorder(stream);
+    mediaRecorderRef.current.ondataavailable = (event) => {
+      if (event.data.size > 0) {
+        chunksRef.current.push(event.data);
+      }
+    };
+
+    mediaRecorderRef.current.onstart = async () => {
+      chunksRef.current = [];
+      currentRecordingRef.current = Promise.withResolvers<Blob>();
+    };
+
+    mediaRecorderRef.current.onstop = async () => {
+      const blob = new Blob(chunksRef.current, { type: "video/webm" });
+      currentRecordingRef.current?.resolve(blob);
+    };
   }, []);
 
-  const setupMediaRecorder = useCallback(
-    (stream: MediaStream) => {
-      mediaRecorderRef.current = new MediaRecorder(stream);
-      mediaRecorderRef.current.ondataavailable = (event) => {
-        if (event.data.size > 0) {
-          chunksRef.current.push(event.data);
-        }
-      };
-
-      mediaRecorderRef.current.onstop = () => {
-        const blob = new Blob(chunksRef.current, { type: "video/webm" });
-        chunksRef.current = [];
-        handleVideoSave(blob);
-      };
-    },
-    [handleVideoSave]
-  );
+  const resetRecordingState = () => {
+    setRecordingState({ type: "stopped" });
+  };
 
   return {
     isRecording,
     startRecording,
     stopRecording,
     setupMediaRecorder,
+    recordingState,
+    resetRecordingState,
   };
+};
+
+const downloadBlob = async (blob: Blob) => {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `recording-${new Date().toISOString()}.webm`;
+  a.click();
+  URL.revokeObjectURL(url);
 };

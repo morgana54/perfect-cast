@@ -9,33 +9,36 @@ import { SubmissionScreen } from "./components/SubmissionScreen";
 import NotFound from "./pages/NotFound";
 import { motion, AnimatePresence } from "framer-motion";
 import { Submit } from "./pages/Submit/Submit";
+import { TokenProvider } from "./components/tokens/TokenContext";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <AnimatePresence mode="wait">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <Routes>
-              <Route path="/" element={<RoleList />} />
-              <Route path="/role/:id" element={<RoleScreen />} />
-              <Route path="/submission/:id" element={<SubmissionScreen />} />
-              <Route path="/talent/submit" element={<Submit />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </motion.div>
-        </AnimatePresence>
-      </BrowserRouter>
-    </TooltipProvider>
+    <TokenProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <AnimatePresence mode="wait">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Routes>
+                <Route path="/" element={<RoleList />} />
+                <Route path="/role/:id" element={<RoleScreen />} />
+                <Route path="/submission/:id" element={<SubmissionScreen />} />
+                <Route path="/talent/submit" element={<Submit />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </motion.div>
+          </AnimatePresence>
+        </BrowserRouter>
+      </TooltipProvider>
+    </TokenProvider>
   </QueryClientProvider>
 );
 
