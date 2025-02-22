@@ -36,6 +36,7 @@ export const useTokenData = () => {
           const authResponse = await fetch(
             "https://11labs-hackathon-tokens.vercel.app/api/tokens",
             {
+              credentials: "include", // This ensures cookies are passed
               headers: {
                 Authorization: `Basic ${authString}`,
               },
