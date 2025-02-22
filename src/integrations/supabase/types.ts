@@ -60,6 +60,36 @@ export type Database = {
         }
         Relationships: []
       }
+      personality: {
+        Row: {
+          agreeableness: number | null
+          conscientiousness: number | null
+          extraversion: number | null
+          id: number
+          neuroticism: number | null
+          openness: number | null
+          video_id: string | null
+        }
+        Insert: {
+          agreeableness?: number | null
+          conscientiousness?: number | null
+          extraversion?: number | null
+          id?: never
+          neuroticism?: number | null
+          openness?: number | null
+          video_id?: string | null
+        }
+        Update: {
+          agreeableness?: number | null
+          conscientiousness?: number | null
+          extraversion?: number | null
+          id?: never
+          neuroticism?: number | null
+          openness?: number | null
+          video_id?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           age: number | null
