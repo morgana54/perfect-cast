@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import { useTokenContext } from "@/components/tokens/TokenContext";
+import { useClient } from "./useClient";
 
 interface UploadState {
   isUploading: boolean;
@@ -19,20 +20,12 @@ interface UseSupabaseUploadReturn extends UploadState {
 }
 
 export const useSupabaseUpload = (): UseSupabaseUploadReturn => {
-  const { data: tokens } = useTokenContext();
-  const [supabase, setSupabase] = useState<SupabaseClient | null>(null);
+  const supabase = useClient();
   const [state, setState] = useState<UploadState>({
     isUploading: false,
     error: null,
     uploadedUrl: null,
   });
-
-  useEffect(() => {
-    if (tokens) {
-      const client = createClient(tokens.supabaseUrl, tokens.supabase);
-      setSupabase(client);
-    }
-  }, [tokens]);
 
   const reset = () => {
     setState({

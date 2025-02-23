@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { Submission } from "@/data/mockData";
@@ -19,7 +18,7 @@ export const SubmissionGrid = ({ submissions }: SubmissionGridProps) => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: index * 0.1 }}
           className="relative group cursor-pointer"
-          onClick={() => navigate(`/submission/${submission.id}`)}
+          onClick={() => navigate(`/cc/submission/${submission.id}`)}
         >
           <div className="aspect-video relative overflow-hidden rounded-lg">
             <img

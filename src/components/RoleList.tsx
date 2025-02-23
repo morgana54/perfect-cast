@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import { roles } from "@/data/mockData";
 import { useNavigate } from "react-router-dom";
@@ -19,7 +18,7 @@ export const RoleList = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
             className="bg-card backdrop-blur-sm border border-border rounded-lg p-6 cursor-pointer hover:shadow-lg transition-all duration-300"
-            onClick={() => navigate(`/role/${role.id}`)}
+            onClick={() => navigate(`./role/${role.id}`)}
           >
             <h2 className="text-2xl font-semibold text-foreground mb-2">
               {role.title}
