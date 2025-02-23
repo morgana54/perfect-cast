@@ -1,4 +1,3 @@
-
 import { cn } from "@/lib/utils";
 import { UserCircle } from "lucide-react";
 import { Button } from "./ui/button";
@@ -13,14 +12,19 @@ import { Link } from "react-router-dom";
 interface HeaderProps {
   className?: string;
   children?: React.ReactNode;
+  isWhiteBg?: boolean;
 }
 
 export const Header = ({
-  children = <GenericHeaderContents />,
+  children = <div />,
   className,
+  isWhiteBg = false,
 }: HeaderProps) => {
   return (
-    <header className="sticky h-16 top-0 left-0 right-0 px-4 bg-background/80 backdrop-blur-md border-b border-border z-20">
+    <header className={cn(
+      "sticky h-16 top-0 left-0 right-0 px-4 backdrop-blur-md border-b border-gray-500/20 z-20",
+      isWhiteBg ? "bg-white/80" : "bg-green-50/80"
+    )}>
       <div
         className={cn(
           "max-w-[800px] px-3 mx-auto h-full flex items-center justify-between",

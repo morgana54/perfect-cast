@@ -9,7 +9,7 @@ import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useClient } from "@/supabase/useClient";
 import { assertIsNotNullish } from "@/lib/assertIsNotNullish";
-import { GenericHeaderContents, Header } from "@/components/Header";
+import { Header } from "@/components/Header";
 import { useRef, useState, useEffect, useCallback } from "react";
 import { ADDITIONAL_USER_INFO } from "@/constants/userInfor";
 import { SubmissionDialog } from "@/components/SubmissionDialog/SubmissionDialog";
@@ -37,7 +37,6 @@ export const Submit = () => {
                 <ArrowLeft />
               </Link>
             </Button>
-            <GenericHeaderContents />
           </div>
         </Header>
         <div
@@ -139,7 +138,6 @@ export const SubmitWithoutLoad = ({ listing }: SubmitProps) => {
               <ArrowLeft />
             </Link>
           </Button>
-          <GenericHeaderContents />
         </div>
       </Header>
 

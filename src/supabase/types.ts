@@ -19,7 +19,6 @@ export interface Listing {
   context_sceneContext: string;
   context_characters: Record<string, Character>;
   pay: number;
-  duration?: number;
 }
 
 export interface Submission {

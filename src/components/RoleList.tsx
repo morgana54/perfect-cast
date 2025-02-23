@@ -29,7 +29,7 @@ export const RoleList = () => {
   if (isLoading || !listings) {
     return (
       <div>
-        <Header className="max-w-[1200px]" />
+        <Header className="max-w-[1200px]" isWhiteBg />
         <div className="max-w-4xl mx-auto py-12 px-4 flex items-center justify-center">
           <LoaderCircle className="animate-spin w-8 h-8" />
         </div>
@@ -39,7 +39,7 @@ export const RoleList = () => {
 
   return (
     <div>
-      <Header className="max-w-[1200px]" />
+      <Header className="max-w-[1200px]" isWhiteBg />
       <div className="max-w-4xl mx-auto py-12 px-4">
         <h1 className="text-4xl font-bold mb-8 text-center text-foreground">
           Casting Offers

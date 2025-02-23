@@ -56,7 +56,7 @@ export const TalentListings = () => {
       <Header className="max-w-[1200px]">
         <GenericHeaderContents />
       </Header>
-      <div className="max-w-[1200px] mx-auto mt-4">
+      <div className="max-w-[1200px] mx-auto mt-8">
         <div className="border rounded-md overflow-hidden">
           <Table>
             <TableHeader className="bg-gray-100">
