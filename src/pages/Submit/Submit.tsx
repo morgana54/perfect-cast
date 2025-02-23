@@ -71,8 +71,6 @@ export const Submit = () => {
       additional_info: ADDITIONAL_USER_INFO,
     },
     onDisconnect: () => {
-      console.log("onDisconnect");
-
       stopRecording();
     },
     onDebug: console.log,
@@ -100,8 +98,10 @@ export const Submit = () => {
     if (previousScreenplayIdx.current === screenplayIdx) return;
 
     previousScreenplayIdx.current = screenplayIdx;
+
+    if (recordingState.type !== "recording") return;
     onStop();
-  }, [onStop, screenplayIdx]);
+  }, [onStop, recordingState.type, screenplayIdx]);
 
   return (
     <div>

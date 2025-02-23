@@ -52,16 +52,22 @@ export const useVideoRecording = (stream: MediaStream | null) => {
   }, [stream, isRecording]);
 
   const startRecording = useCallback(async () => {
+    if (recordingState.type === "recording") return;
+
     setRecordingState({ type: "recording" });
-  }, []);
+  }, [recordingState.type]);
 
   const stopRecording = useCallback(async () => {
+    if (recordingState.type === "recorded") return;
+
     setRecordingState({ type: "recorded", blob: null });
     const blob = (await currentRecordingRef.current?.promise) ?? null;
     setRecordingState({ type: "recorded", blob });
-  }, []);
+  }, [recordingState.type]);
 
   const resetRecordingState = () => {
+    if (recordingState.type === "stopped") return;
+
     setRecordingState({ type: "stopped" });
   };
 
