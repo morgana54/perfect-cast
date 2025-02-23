@@ -1,4 +1,3 @@
-import { useSupabaseUpload } from "@/supabase/useUpload";
 import { useState, useRef, useCallback } from "react";
 
 export type RecordingState =
@@ -29,8 +28,6 @@ export const useVideoRecording = () => {
       setRecordingState({ type: "recording" });
     }
   }, [isRecording]);
-
-  const { uploadFile } = useSupabaseUpload();
 
   const stopRecording = useCallback(async () => {
     if (mediaRecorderRef.current && isRecording) {

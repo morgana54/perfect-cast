@@ -66,6 +66,9 @@ export const Submit = () => {
       agent_role: screenplay.agentRole,
       additional_info: ADDITIONAL_USER_INFO,
     },
+    onDisconnect: () => {
+      stopRecording();
+    },
   });
 
   const [recordingId, setRecordingId] = useState<string | null>(null);
@@ -122,22 +125,43 @@ export const Submit = () => {
       </div>
 
       <main className="p-4 max-w-[800px] mx-auto pb-32">
-        <Select
-          value={String(screenplayIdx)}
-          onValueChange={(v) => setScreenplayIdx(+v)}
-        >
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Screenplay" />
-          </SelectTrigger>
-          <SelectContent>
-            {SCREENPLAYS.map((s, i) => (
-              <SelectItem value={String(i)}>{s.title}</SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-
         <div className="font-mono text-wrap whitespace-pre-wrap">
-          {stringifyScreenplay(screenplay)}
+          <div className="-mx-3">
+            <Select
+              value={String(screenplayIdx)}
+              onValueChange={(v) => setScreenplayIdx(+v)}
+            >
+              <SelectTrigger className="w-[320px] text-2xl h-12 font-bold text-left">
+                <SelectValue placeholder="Screenplay" />
+              </SelectTrigger>
+              <SelectContent>
+                {SCREENPLAYS.map((s, i) => (
+                  <SelectItem key={String(i)} value={String(i)}>
+                    {s.title}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="text-xl font-bold mt-4 mb-1">Genre</div>
+          <div>{screenplay.genre}</div>
+          <div className="text-xl font-bold mt-4 mb-1">Scene setting</div>
+          <div>{screenplay.context.setting}</div>
+
+          <div className="text-xl font-bold mt-4 mb-1">Scene context</div>
+          <div>{screenplay.context.sceneContext}</div>
+
+          <div className="text-xl font-bold mt-4 mb-1">Your role</div>
+          <div className="text-center font-bold text-lg">
+            <span className="bg-blue-200 px-3 py-1 rounded-sm">
+              {screenplay.userRole}
+            </span>
+          </div>
+
+          <div className="text-xl font-bold mt-4 mb-1">Screenplay</div>
+
+          {screenplay.scene}
         </div>
       </main>
 
@@ -277,15 +301,3 @@ const deepContextStringify = (context: SceneContext): string => {
     characters.join("\n")
   );
 };
-
-const stringifyScreenplay = (screenplay: Screenplay): string => `
-Title: ${screenplay.title}
-Genre: ${screenplay.genre}
-Original Scene: ${screenplay.originalScene}
-
-${deepContextStringify(screenplay.context)}
-
-================================================================
-
-${screenplay.scene}
-`;

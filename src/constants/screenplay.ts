@@ -258,4 +258,94 @@ KAFFEE: (quietly) Did you order the Code Red?
 
 JESSEP: You're goddamn right I did!`,
   },
+  {
+    title: "Star Wars (Long)",
+    genre: "Sci-Fi",
+    userRole: "LUKE",
+    agentRole: "BEN",
+    originalScene: `INT. LARS HOMESTEAD - GARAGE AREA - LATE AFTERNOON
+
+The hot winds of the desert blow through the garage while Luke and
+Ben continue their discussion. The old Jedi's eyes have a distant
+look in them as he speaks of the past, each word carefully chosen.`,
+    context: {
+      setting: "A remote moisture farm on the desert planet of Tatooine",
+      characters: {
+        "Ben (Obi-Wan) Kenobi": {
+          age: "57",
+          description:
+            "A weathered hermit with white hair and beard, wearing simple desert robes. Former Jedi Master living in exile.",
+          background:
+            "Once a revered Jedi Knight, now living as a hermit, protecting Luke and holding the secret of his heritage.",
+          personality:
+            "Wise, gentle yet authoritative, carrying deep wisdom and hidden pain from the past.",
+        },
+        "Luke Skywalker": {
+          age: "19",
+          description:
+            "Young, eager farm boy with sandy blonde hair and bright eyes, wearing simple farming clothes.",
+          background:
+            "Raised by his aunt and uncle on their moisture farm, unaware of his true heritage.",
+          personality:
+            "Idealistic, adventurous, naive but determined to learn about his father and the wider galaxy.",
+        },
+      },
+      sceneContext:
+        "This pivotal scene occurs after Ben has saved Luke from the Sand People. Ben begins to reveal the truth about Luke's father, carefully navigating between honesty and protecting Luke from the full, devastating truth.",
+    },
+    scene: `Strange creatures play exotic big band music on odd-looking
+instruments as Luke, still giddy, downs a fresh drink and
+follows Ben and Chewbacca to a booth where Han Solo is
+sitting. Han is a tough, roguish starpilot about thirty years
+old. A mercenary on a starship, he is simple, sentimental,
+and cocksure.
+
+            HAN
+Han Solo. I'm captain of the
+Millennium Falcon. Chewie here tells
+me you're looking for passage to the
+Alderaan system.
+
+            BEN
+Yes, indeed. If it's a fast ship.
+
+            HAN
+Fast ship? You've never heard of the
+Millennium Falcon?
+
+            BEN
+Should I have?
+
+            HAN
+It's the ship that made the Kessel
+run in less than twelve parsecs!
+
+Ben reacts to Solo's stupid attempt to impress them with
+obvious misinformation.
+
+            HAN
+I've outrun Imperial starships, not
+the local bulk-cruisers, mind you.
+I'm talking about the big Corellian
+ships now. She's fast enough for
+you, old man. What's the cargo?
+
+            BEN
+Only passengers. Myself, the boy,
+two droids, and no questions asked.
+
+            HAN
+What is it? Some kind of local
+trouble?
+
+            BEN
+Let's just say we'd like to avoid
+any Imperial entanglements.
+
+            HAN
+Well, that's the trick, isn't it?
+And it's going to cost you something
+extra. Ten thousand in advance.
+    `,
+  },
 ];
