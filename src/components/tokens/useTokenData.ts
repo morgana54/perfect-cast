@@ -1,9 +1,10 @@
+
 // useTokenData.ts
 import { useState, useEffect } from "react";
 import { type TokenData } from "./TokenContext";
 
 export const useTokenData = () => {
-  const [data, setData] = useState<TokenData>(null);
+  const [data, setData] = useState<TokenData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
