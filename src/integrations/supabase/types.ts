@@ -60,6 +60,78 @@ export type Database = {
         }
         Relationships: []
       }
+      critique: {
+        Row: {
+          conversation_id: string | null
+          feedback: string | null
+          id: number
+          score: number | null
+          video_id: string | null
+        }
+        Insert: {
+          conversation_id?: string | null
+          feedback?: string | null
+          id?: number
+          score?: number | null
+          video_id?: string | null
+        }
+        Update: {
+          conversation_id?: string | null
+          feedback?: string | null
+          id?: number
+          score?: number | null
+          video_id?: string | null
+        }
+        Relationships: []
+      }
+      listings: {
+        Row: {
+          agent_id: string | null
+          agentRole: string
+          context_characters: Json
+          context_sceneContext: string
+          context_setting: string
+          displayed_screenplay: string
+          genre: string
+          id: number
+          originalScene: string
+          pay: number
+          screenplay: string
+          title: string
+          userRole: string
+        }
+        Insert: {
+          agent_id?: string | null
+          agentRole: string
+          context_characters: Json
+          context_sceneContext: string
+          context_setting: string
+          displayed_screenplay?: string
+          genre: string
+          id?: never
+          originalScene: string
+          pay: number
+          screenplay: string
+          title: string
+          userRole: string
+        }
+        Update: {
+          agent_id?: string | null
+          agentRole?: string
+          context_characters?: Json
+          context_sceneContext?: string
+          context_setting?: string
+          displayed_screenplay?: string
+          genre?: string
+          id?: never
+          originalScene?: string
+          pay?: number
+          screenplay?: string
+          title?: string
+          userRole?: string
+        }
+        Relationships: []
+      }
       personality: {
         Row: {
           agreeableness: number | null
@@ -134,37 +206,25 @@ export type Database = {
       }
       submissions: {
         Row: {
-          age: number | null
+          bucket_video_url: string | null
+          eleven_conversation_id: string | null
           id: number
-          performance_summary: string | null
-          skills_and_expertise: string[] | null
-          user_image: string | null
+          imentive_video_id: string | null
           user_name: string | null
-          user_surname: string | null
-          video_id: string | null
-          video_url: string | null
         }
         Insert: {
-          age?: number | null
+          bucket_video_url?: string | null
+          eleven_conversation_id?: string | null
           id?: never
-          performance_summary?: string | null
-          skills_and_expertise?: string[] | null
-          user_image?: string | null
+          imentive_video_id?: string | null
           user_name?: string | null
-          user_surname?: string | null
-          video_id?: string | null
-          video_url?: string | null
         }
         Update: {
-          age?: number | null
+          bucket_video_url?: string | null
+          eleven_conversation_id?: string | null
           id?: never
-          performance_summary?: string | null
-          skills_and_expertise?: string[] | null
-          user_image?: string | null
+          imentive_video_id?: string | null
           user_name?: string | null
-          user_surname?: string | null
-          video_id?: string | null
-          video_url?: string | null
         }
         Relationships: []
       }

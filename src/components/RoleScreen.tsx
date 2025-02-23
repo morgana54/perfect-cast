@@ -1,18 +1,57 @@
 
 import { useParams, useNavigate } from "react-router-dom";
-import { roles, submissions } from "@/data/mockData";
 import { SubmissionGrid } from "./SubmissionGrid";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, LoaderCircle } from "lucide-react";
+import { useClient } from "@/supabase/useClient";
+import { useQuery } from "@tanstack/react-query";
+import { Listing } from "@/supabase/types";
 
 export const RoleScreen = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const role = roles.find((r) => r.id === id);
-  const roleSubmissions = submissions.filter((s) => s.roleId === id);
+  const client = useClient();
 
-  if (!role) return <div>Role not found</div>;
+  const { data: listing, isLoading } = useQuery({
+    queryKey: ["listing", id],
+    queryFn: async () => {
+      if (!client) throw new Error("No Supabase client");
+      const { data, error } = await client
+        .from("listings")
+        .select("*")
+        .eq("id", id)
+        .single();
+      
+      if (error) throw error;
+      return data as Listing;
+    },
+    enabled: !!client && !!id
+  });
+
+  const { data: submissions } = useQuery({
+    queryKey: ["submissions", id],
+    queryFn: async () => {
+      if (!client) throw new Error("No Supabase client");
+      const { data, error } = await client
+        .from("submissions")
+        .select("*")
+        // Note: We need to add a listing_id column to submissions table
+        // .eq("listing_id", id)
+        
+      if (error) throw error;
+      return data || [];
+    },
+    enabled: !!client && !!id
+  });
+
+  if (isLoading || !listing) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <LoaderCircle className="animate-spin w-8 h-8" />
+      </div>
+    );
+  }
 
   return (
     <div className="relative min-h-screen">
@@ -27,18 +66,22 @@ export const RoleScreen = () => {
 
       <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2 gap-6 p-6">
         <div className="bg-card backdrop-blur-sm rounded-lg border border-border p-6">
-          <h2 className="text-2xl font-bold mb-4">{role.title} - Screenplay</h2>
+          <h2 className="text-2xl font-bold mb-4">{listing.title} - Screenplay</h2>
           <ScrollArea className="h-[calc(100vh-12rem)]">
             <div className="prose max-w-none">
               <pre className="whitespace-pre-wrap font-mono text-sm">
-                {role.screenplay}
+                {listing.screenplay}
               </pre>
             </div>
           </ScrollArea>
         </div>
         <div className="space-y-6">
           <h2 className="text-2xl font-bold">Submissions</h2>
-          <SubmissionGrid submissions={roleSubmissions} />
+          {submissions && submissions.length > 0 ? (
+            <SubmissionGrid submissions={submissions} />
+          ) : (
+            <p className="text-muted-foreground">No submissions yet.</p>
+          )}
         </div>
       </div>
     </div>
