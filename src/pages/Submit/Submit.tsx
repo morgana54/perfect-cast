@@ -10,9 +10,10 @@ import { useQuery } from "@tanstack/react-query";
 import { useClient } from "@/supabase/useClient";
 import { assertIsNotNullish } from "@/lib/assertIsNotNullish";
 import { GenericHeaderContents, Header } from "@/components/Header";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import { ADDITIONAL_USER_INFO } from "@/constants/userInfor";
 import { SubmissionDialog } from "@/components/SubmissionDialog/SubmissionDialog";
+import { cn } from "@/lib/utils";
 
 export const Submit = () => {
   const { id } = useParams();
