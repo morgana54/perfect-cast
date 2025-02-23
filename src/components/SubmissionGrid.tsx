@@ -32,5 +32,4 @@ export const SubmissionGrid = ({ submissions }: SubmissionGridProps) => {
       ))}
     </div>
   );
-});
-
+}
