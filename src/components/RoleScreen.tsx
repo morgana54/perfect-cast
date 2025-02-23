@@ -36,8 +36,7 @@ export const RoleScreen = () => {
       const { data, error } = await client
         .from("submissions")
         .select("*")
-        // Note: We need to add a listing_id column to submissions table
-        // .eq("listing_id", id)
+        .eq("listing_id", id);
         
       if (error) throw error;
       return data || [];

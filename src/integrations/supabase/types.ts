@@ -210,6 +210,7 @@ export type Database = {
           eleven_conversation_id: string | null
           id: number
           imentive_video_id: string | null
+          listing_id: number | null
           user_name: string | null
         }
         Insert: {
@@ -217,6 +218,7 @@ export type Database = {
           eleven_conversation_id?: string | null
           id?: never
           imentive_video_id?: string | null
+          listing_id?: number | null
           user_name?: string | null
         }
         Update: {
@@ -224,9 +226,18 @@ export type Database = {
           eleven_conversation_id?: string | null
           id?: never
           imentive_video_id?: string | null
+          listing_id?: number | null
           user_name?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "submissions_listing_id_fkey"
+            columns: ["listing_id"]
+            isOneToOne: false
+            referencedRelation: "listings"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       video_emotions: {
         Row: {

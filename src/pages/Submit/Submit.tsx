@@ -214,6 +214,7 @@ export const SubmitWithoutLoad = ({ listing }: SubmitProps) => {
                 recordingState={recordingState}
                 recordingId={recordingId}
                 onRecordAgain={resetRecordingState}
+                listingId={id} // Pass the listing ID from params
               />
             </DialogDescription>
           </DialogHeader>
@@ -227,11 +228,14 @@ interface SubmitPopupContentsProps {
   recordingState: RecordingState;
   recordingId: string | null;
   onRecordAgain: () => void;
+  listingId: string | null; // Add this prop
 }
+
 function SubmitPopupContents({
   recordingState,
   recordingId,
   onRecordAgain,
+  listingId, // Add this parameter
 }: SubmitPopupContentsProps) {
   const upload = useSupabaseUpload();
   const client = useClient();
@@ -240,7 +244,8 @@ function SubmitPopupContents({
     if (
       recordingState.type !== "recorded" ||
       !recordingState.blob ||
-      !recordingId
+      !recordingId ||
+      !listingId
     )
       return;
     assertIsNotNullish(client);
@@ -255,10 +260,11 @@ function SubmitPopupContents({
 
     const { data, error } = await client
       .from("submissions")
-      .insert<Partial<UserProfile>>({
+      .insert({
         user_name: "KUBA",
         bucket_video_url: videoUrl,
         eleven_conversation_id: recordingId,
+        listing_id: parseInt(listingId), // Add the listing_id
       })
       .select();
 
