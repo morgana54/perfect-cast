@@ -5,8 +5,6 @@ import { useCamera } from "@/hooks/useCamera";
 import { SceneContext, Screenplay, SCREENPLAYS } from "@/constants/screenplay";
 import { ADDITIONAL_USER_INFO } from "@/constants/userInfor";
 
-const SP = SCREENPLAYS[0];
-
 import "./Submit.css";
 import {
   Dialog,
@@ -27,21 +25,27 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
+import { Header } from "@/components/Header";
 
 export const Submit = () => {
+  const [screenplayIdx, setScreenplayIdx] = useState<number>(0);
+  const screenplay = useMemo(() => SCREENPLAYS[screenplayIdx], [screenplayIdx]);
+
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const stream = useStream();
+  useEffect(() => {
+    if (stream && videoRef.current) {
+      videoRef.current.srcObject = stream;
+    }
+  }, [stream, videoRef]);
+
   const {
     isRecording,
     startRecording,
     stopRecording,
-    setupMediaRecorder,
     resetRecordingState,
     recordingState,
-  } = useVideoRecording();
-  const [screenplayIdx, setScreenplayIdx] = useState<number>(0);
-  const screenplay = useMemo(() => SCREENPLAYS[screenplayIdx], [screenplayIdx]);
-
-  const { isCameraOn, setIsCameraOn, isMicOn, setIsMicOn, videoRef } =
-    useCamera(setupMediaRecorder);
+  } = useVideoRecording(stream);
 
   // Flatten the data structure to primitives
   const characterDescriptions = Object.entries(screenplay.context.characters)
@@ -52,7 +56,7 @@ export const Submit = () => {
     .join("\n\n");
 
   const a = useConversation({
-    agentId: "lnCRtGJsv1ZtyVcsM9Rt",
+    agentId: "2CWlVlqCNatM9QFfyuIN",
     dynamicVariables: {
       screenplay_text: screenplay.scene,
       scene_description: screenplay.originalScene,
@@ -67,8 +71,11 @@ export const Submit = () => {
       additional_info: ADDITIONAL_USER_INFO,
     },
     onDisconnect: () => {
+      console.log("onDisconnect");
+
       stopRecording();
     },
+    onDebug: console.log,
   });
 
   const [recordingId, setRecordingId] = useState<string | null>(null);
@@ -98,7 +105,9 @@ export const Submit = () => {
 
   return (
     <div>
-      <div className="sticky ml-auto p-4 top-0 left-0 inline-block float-right">
+      <Header />
+
+      <div className="sticky ml-auto p-4 top-16 left-0 inline-block float-right">
         <div className="relative rounded-2xl overflow-hidden shadow-lg aspect-video h-72 bg-black">
           <video
             ref={videoRef}
@@ -106,15 +115,11 @@ export const Submit = () => {
             playsInline
             muted
             className={cn("w-full h-full object-cover", {
-              hidden: recordingState.type === "recorded" || !isCameraOn,
+              hidden: recordingState.type === "recorded",
             })}
           />
 
           <VideoControls
-            isMicOn={isMicOn}
-            isCameraOn={isCameraOn}
-            onToggleMic={() => setIsMicOn(!isMicOn)}
-            onToggleCamera={() => setIsCameraOn(!isCameraOn)}
             agentStatus={a.status}
             onStart={onStart}
             onEndCall={onStop}
@@ -209,8 +214,6 @@ function SubmitPopupContents({
       fileName,
       bucketName
     );
-
-    console.log(uploadedUrl);
   };
 
   if (upload.uploadedUrl) {
@@ -301,3 +304,32 @@ const deepContextStringify = (context: SceneContext): string => {
     characters.join("\n")
   );
 };
+
+function useStream() {
+  const [stream, setStream] = useState<MediaStream | null>(null);
+
+  useEffect(() => {
+    let um: MediaStream | null = null;
+
+    const setupStream = async () => {
+      try {
+        um = await navigator.mediaDevices.getUserMedia({
+          video: true,
+          audio: true,
+        });
+
+        setStream(um);
+      } catch (err) {
+        console.error("Error accessing camera:", err);
+      }
+    };
+
+    setupStream();
+
+    return () => {
+      um?.getTracks().forEach((track) => track.stop());
+    };
+  }, []);
+
+  return stream;
+}

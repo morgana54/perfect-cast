@@ -3,11 +3,7 @@ import { Status } from "@11labs/react";
 import { LoaderCircle, Mic, RefreshCcw, Square } from "lucide-react";
 
 interface VideoControlsProps {
-  isMicOn: boolean;
-  isCameraOn: boolean;
   onStart: () => void;
-  onToggleMic: () => void;
-  onToggleCamera: () => void;
   onEndCall: () => void;
   onRestart: () => void;
   agentStatus: Status;
@@ -15,10 +11,6 @@ interface VideoControlsProps {
 }
 
 export const VideoControls = ({
-  isMicOn,
-  isCameraOn,
-  onToggleMic,
-  onToggleCamera,
   onEndCall,
   onStart,
   onRestart,

@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 
 export type RecordingState =
   | {
@@ -12,50 +12,53 @@ export type RecordingState =
       blob: Blob | null;
     };
 
-export const useVideoRecording = () => {
+export const useVideoRecording = (stream: MediaStream | null) => {
   const [recordingState, setRecordingState] = useState<RecordingState>({
     type: "stopped",
   });
   const isRecording = recordingState.type === "recording";
-
-  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
-  const chunksRef = useRef<Blob[]>([]);
   const currentRecordingRef = useRef<PromiseWithResolvers<Blob> | null>(null);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
 
-  const startRecording = useCallback(() => {
-    if (mediaRecorderRef.current && !isRecording) {
-      mediaRecorderRef.current.start();
-      setRecordingState({ type: "recording" });
-    }
-  }, [isRecording]);
+  useEffect(() => {
+    if (!stream || !isRecording) return;
 
-  const stopRecording = useCallback(async () => {
-    if (mediaRecorderRef.current && isRecording) {
-      mediaRecorderRef.current.stop();
+    const mediaRecorder = new MediaRecorder(stream);
+    mediaRecorderRef.current = mediaRecorder;
+    let chunks: Blob[] = [];
+    const currentRecordingPromise = Promise.withResolvers<Blob>();
+    currentRecordingRef.current = currentRecordingPromise;
 
-      setRecordingState({ type: "recorded", blob: null });
-      const blob = (await currentRecordingRef.current?.promise) ?? null;
-      setRecordingState({ type: "recorded", blob });
-    }
-  }, [isRecording]);
-
-  const setupMediaRecorder = useCallback((stream: MediaStream) => {
-    mediaRecorderRef.current = new MediaRecorder(stream);
-    mediaRecorderRef.current.ondataavailable = (event) => {
+    mediaRecorder.ondataavailable = (event) => {
       if (event.data.size > 0) {
-        chunksRef.current.push(event.data);
+        chunks.push(event.data);
       }
     };
 
-    mediaRecorderRef.current.onstart = async () => {
-      chunksRef.current = [];
-      currentRecordingRef.current = Promise.withResolvers<Blob>();
+    mediaRecorder.onstart = async () => {
+      chunks = [];
     };
 
-    mediaRecorderRef.current.onstop = async () => {
-      const blob = new Blob(chunksRef.current, { type: "video/webm" });
-      currentRecordingRef.current?.resolve(blob);
+    mediaRecorder.onstop = async () => {
+      console.log(1);
+
+      const blob = new Blob(chunks, { type: "video/webm" });
+      currentRecordingPromise.resolve(blob);
     };
+
+    mediaRecorder.start();
+
+    return () => mediaRecorder.stop();
+  }, [stream, isRecording]);
+
+  const startRecording = useCallback(async () => {
+    setRecordingState({ type: "recording" });
+  }, []);
+
+  const stopRecording = useCallback(async () => {
+    setRecordingState({ type: "recorded", blob: null });
+    const blob = (await currentRecordingRef.current?.promise) ?? null;
+    setRecordingState({ type: "recorded", blob });
   }, []);
 
   const resetRecordingState = () => {
@@ -66,7 +69,6 @@ export const useVideoRecording = () => {
     isRecording,
     startRecording,
     stopRecording,
-    setupMediaRecorder,
     recordingState,
     resetRecordingState,
   };

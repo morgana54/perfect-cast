@@ -114,8 +114,8 @@ CHARLES FRECK: That's your fifth shower today!`,
   {
     title: "Aladdin",
     genre: "Animation",
-    userRole: "CUSTOMER",
-    agentRole: "PEDDLER",
+    agentRole: "CUSTOMER",
+    userRole: "PEDDLER",
     originalScene: `INT. MARKETPLACE - AGRABAH - DAY
 
 The bustling marketplace of Agrabah is filled with vendors and
