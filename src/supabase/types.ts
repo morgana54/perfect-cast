@@ -1,3 +1,4 @@
+
 export interface Character {
   age: string;
   description: string;
@@ -19,6 +20,14 @@ export interface Listing {
   context_sceneContext: string;
   context_characters: Record<string, Character>;
   pay: number;
+}
+
+export interface Submission {
+  id: number;
+  user_name: string;
+  bucket_video_url: string;
+  eleven_conversation_id: string;
+  listing_id: number;
 }
 
 export interface UserProfile {

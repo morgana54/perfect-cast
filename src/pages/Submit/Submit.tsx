@@ -1,45 +1,27 @@
+
 import { VideoControls } from "@/components/VideoControls";
 import { useConversation } from "@11labs/react";
 import { RecordingState, useVideoRecording } from "@/hooks/useVideoRecording";
-import { useCamera } from "@/hooks/useCamera";
-import {
-  Character,
-  SceneContext,
-  Screenplay,
-  SCREENPLAYS,
-} from "@/constants/screenplay";
-import { ADDITIONAL_USER_INFO } from "@/constants/userInfor";
-
-import "./Submit.css";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Listing } from "@/supabase/types";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, LoaderCircle, RefreshCcw } from "lucide-react";
-import { useSupabaseUpload } from "@/supabase/useUpload";
-import { cn } from "@/lib/utils";
-import { GenericHeaderContents, Header } from "@/components/Header";
+import { ArrowLeft, LoaderCircle } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useClient } from "@/supabase/useClient";
 import { assertIsNotNullish } from "@/lib/assertIsNotNullish";
-import { Listing, UserProfile } from "@/supabase/types";
+import { GenericHeaderContents, Header } from "@/components/Header";
+import { useRef, useState } from "react";
+import { ADDITIONAL_USER_INFO } from "@/constants/userInfor";
+import { SubmissionDialog } from "@/components/SubmissionDialog/SubmissionDialog";
 
 export const Submit = () => {
   const { id } = useParams();
-
   const client = useClient();
   const { data, isLoading } = useQuery({
     queryKey: ["listing", id],
     queryFn: async () => {
       assertIsNotNullish(client);
       const { data } = await client.from("listings").select("*").eq("id", id);
-
       return data?.[0] as Listing | null;
     },
   });
@@ -79,14 +61,11 @@ export const Submit = () => {
 interface SubmitProps {
   listing: Listing;
 }
+
 export const SubmitWithoutLoad = ({ listing }: SubmitProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const stream = useStream();
-  useEffect(() => {
-    if (stream && videoRef.current) {
-      videoRef.current.srcObject = stream;
-    }
-  }, [stream, videoRef]);
+  const { id } = useParams();
 
   const {
     isRecording,
@@ -96,7 +75,12 @@ export const SubmitWithoutLoad = ({ listing }: SubmitProps) => {
     recordingState,
   } = useVideoRecording(stream);
 
-  // Flatten the data structure to primitives
+  useEffect(() => {
+    if (stream && videoRef.current) {
+      videoRef.current.srcObject = stream;
+    }
+  }, [stream, videoRef]);
+
   const characterDescriptions = Object.entries(listing.context_characters)
     .map(
       ([name, info]) =>
@@ -129,14 +113,15 @@ export const SubmitWithoutLoad = ({ listing }: SubmitProps) => {
 
   const onStart = useCallback(async () => {
     startRecording();
-
     const recordingId = await a.startSession({});
     setRecordingId(recordingId);
   }, [a, startRecording]);
+
   const onStop = useCallback(async () => {
     stopRecording();
     await a.endSession();
   }, [a, stopRecording]);
+
   const onRestart = useCallback(async () => {
     await onStop();
     await onStart();
@@ -195,171 +180,21 @@ export const SubmitWithoutLoad = ({ listing }: SubmitProps) => {
           </div>
 
           <div className="text-xl font-bold mt-4 mb-1">Screenplay</div>
-
           {listing.displayed_screenplay}
         </div>
       </main>
 
-      <Dialog
-        open={recordingState.type === "recorded"}
-        onOpenChange={(o) => {
-          if (!o) resetRecordingState();
+      <SubmissionDialog
+        recordingState={recordingState}
+        recordingId={recordingId}
+        onRecordAgain={resetRecordingState}
+        listingId={id}
+        isOpen={recordingState.type === "recorded"}
+        onOpenChange={(open) => {
+          if (!open) resetRecordingState();
         }}
-      >
-        <DialogContent className="w-[1200px] max-w-max">
-          <DialogHeader>
-            <DialogTitle>Here's your casting recording</DialogTitle>
-            <DialogDescription>
-              <SubmitPopupContents
-                recordingState={recordingState}
-                recordingId={recordingId}
-                onRecordAgain={resetRecordingState}
-                listingId={id} // Pass the listing ID from params
-              />
-            </DialogDescription>
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
-    </div>
-  );
-};
-
-interface SubmitPopupContentsProps {
-  recordingState: RecordingState;
-  recordingId: string | null;
-  onRecordAgain: () => void;
-  listingId: string | null; // Add this prop
-}
-
-function SubmitPopupContents({
-  recordingState,
-  recordingId,
-  onRecordAgain,
-  listingId, // Add this parameter
-}: SubmitPopupContentsProps) {
-  const upload = useSupabaseUpload();
-  const client = useClient();
-
-  const onSubmit = async () => {
-    if (
-      recordingState.type !== "recorded" ||
-      !recordingState.blob ||
-      !recordingId ||
-      !listingId
-    )
-      return;
-    assertIsNotNullish(client);
-
-    const fileName = `${recordingId}.webm`;
-    const bucketName = "screening";
-    const videoUrl = await upload.uploadFile(
-      recordingState.blob,
-      fileName,
-      bucketName
-    );
-
-    const { data, error } = await client
-      .from("submissions")
-      .insert({
-        user_name: "KUBA",
-        bucket_video_url: videoUrl,
-        eleven_conversation_id: recordingId,
-        listing_id: parseInt(listingId), // Add the listing_id
-      })
-      .select();
-
-    console.log(data, error);
-  };
-
-  if (upload.uploadedUrl) {
-    return (
-      <>
-        <p className="mb-4 mt-1">
-          Your casting recording has been submitted.{" "}
-          <strong>We'll call you back soon!</strong>
-        </p>
-        {recordingState.type === "recorded" && recordingState.blob && (
-          <VideoPopupContent
-            className="w-full aspect-video object-cover rounded-xl"
-            blob={recordingState.blob}
-          />
-        )}
-      </>
-    );
-  }
-
-  return (
-    <>
-      <p className="mb-4 mt-1">Do you want to submit it?</p>
-      <VideoPopupContent
-        className="w-full aspect-video object-cover rounded-xl"
-        blob={recordingState.type === "recorded" ? recordingState.blob : null}
       />
-      <div className="flex mt-4 gap-4">
-        <Button
-          variant="default"
-          className="w-full"
-          onClick={onSubmit}
-          disabled={upload.isUploading}
-        >
-          {upload.isUploading && <LoaderCircle className="animate-spin" />}
-          Submit
-        </Button>
-        <Button
-          variant="destructive"
-          className="w-full"
-          disabled={upload.isUploading}
-          onClick={onRecordAgain}
-        >
-          <RefreshCcw />
-          Record Again
-        </Button>
-      </div>
-    </>
-  );
-}
-
-interface VideoPopupContentProps {
-  blob: Blob | null;
-  className?: string;
-}
-function VideoPopupContent({ blob, className }: VideoPopupContentProps) {
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    if (!blob || !videoRef.current) return;
-
-    const blobUrl = URL.createObjectURL(blob);
-    videoRef.current.src = blobUrl;
-
-    return () => {
-      URL.revokeObjectURL(blobUrl);
-    };
-  }, [blob]);
-
-  return (
-    <video ref={videoRef} controls autoPlay className={className}>
-      Your browser does not support the video element.
-    </video>
-  );
-}
-const deepContextStringify = (context: SceneContext): string => {
-  const characters = Object.entries(context.characters).map(
-    ([name, value]) => `
-  ${name}
-    Age: ${value.age}
-    Description: ${value.description}
-    Background: ${value.background}
-    Personality: ${value.personality}`
-  );
-
-  return (
-    Object.entries(context)
-      .filter(([key]) => key !== "characters")
-      .map(([key, value]) => `${key}: ${value}`)
-      .join("\n") +
-    "\n\nCharacters:" +
-    characters.join("\n")
+    </div>
   );
 };
 
