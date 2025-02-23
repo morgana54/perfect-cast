@@ -7,6 +7,7 @@ export interface Character {
 
 export interface Listing {
   id: number;
+  agent_id: string;
   title: string;
   genre: string;
   userRole: string;

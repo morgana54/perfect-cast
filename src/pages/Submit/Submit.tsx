@@ -105,7 +105,7 @@ export const SubmitWithoutLoad = ({ listing }: SubmitProps) => {
     .join("\n\n");
 
   const a = useConversation({
-    agentId: "2CWlVlqCNatM9QFfyuIN",
+    agentId: listing.agent_id,
     dynamicVariables: {
       screenplay_text: listing.screenplay,
       scene_description: listing.originalScene,
