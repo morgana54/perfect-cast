@@ -14,6 +14,7 @@ export const VideoPlayer = ({ url }: VideoPlayerProps) => {
   const [isMuted, setIsMuted] = useState(false);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
   const [isEnded, setIsEnded] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const progressBarRef = useRef<HTMLDivElement>(null);
@@ -53,7 +54,8 @@ export const VideoPlayer = ({ url }: VideoPlayerProps) => {
 
   const handleTimeUpdate = () => {
     if (videoRef.current) {
-      const progress = (videoRef.current.currentTime / videoRef.current.duration) * 100;
+      setCurrentTime(videoRef.current.currentTime);
+      const progress = (videoRef.current.currentTime / (videoRef.current.duration || 1)) * 100;
       setProgress(progress);
     }
   };
@@ -73,11 +75,12 @@ export const VideoPlayer = ({ url }: VideoPlayerProps) => {
     if (videoRef.current && progressBarRef.current) {
       const rect = progressBarRef.current.getBoundingClientRect();
       const pos = (e.clientX - rect.left) / rect.width;
-      videoRef.current.currentTime = pos * duration;
+      videoRef.current.currentTime = pos * (videoRef.current.duration || 0);
     }
   };
 
   const formatTime = (time: number) => {
+    if (!isFinite(time) || isNaN(time)) return "0:00";
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
@@ -135,7 +138,7 @@ export const VideoPlayer = ({ url }: VideoPlayerProps) => {
               <Repeat />
             </Button>
             <span className="text-white text-sm">
-              {videoRef.current && formatTime(videoRef.current.currentTime)} / {formatTime(duration)}
+              {formatTime(currentTime)} / {formatTime(duration)}
             </span>
           </div>
         </div>
