@@ -38,7 +38,7 @@ export const SubmissionGrid = ({ submissions }: SubmissionGridProps) => {
             </div>
             
             <div className="p-4 bg-white/5 backdrop-blur-sm">
-              <p className="text-sm text-muted-foreground line-clamp-2 group-hover:line-clamp-none transition-all duration-300">
+              <p className="text-sm text-muted-foreground overflow-hidden transition-all duration-500 ease-in-out group-hover:duration-500 line-clamp-2 group-hover:line-clamp-none [transition-timing-function:cubic-bezier(0.4,0,0.2,1)] group-hover:transform-gpu">
                 {mockActorDetails.performanceSummary}
               </p>
             </div>
