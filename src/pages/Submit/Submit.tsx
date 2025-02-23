@@ -196,7 +196,7 @@ export const SubmitWithoutLoad = ({ listing }: SubmitProps) => {
 
           <div className="text-xl font-bold mt-4 mb-1">Screenplay</div>
 
-          {listing.screenplay}
+          {listing.displayed_screenplay}
         </div>
       </main>
 

@@ -13,6 +13,7 @@ export interface Listing {
   agentRole: string;
   originalScene: string;
   screenplay: string;
+  displayed_screenplay: string;
   context_setting: string;
   context_sceneContext: string;
   context_characters: Record<string, Character>;
