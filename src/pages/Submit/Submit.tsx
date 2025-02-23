@@ -28,7 +28,7 @@ import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useClient } from "@/supabase/useClient";
 import { assertIsNotNullish } from "@/lib/assertIsNotNullish";
-import { Listing } from "@/supabase/types";
+import { Listing, UserProfile } from "@/supabase/types";
 
 export const Submit = () => {
   const { id } = useParams();
@@ -234,12 +234,35 @@ function SubmitPopupContents({
   onRecordAgain,
 }: SubmitPopupContentsProps) {
   const upload = useSupabaseUpload();
+  const client = useClient();
+
   const onSubmit = async () => {
-    if (recordingState.type !== "recorded" || !recordingState.blob) return;
+    if (
+      recordingState.type !== "recorded" ||
+      !recordingState.blob ||
+      !recordingId
+    )
+      return;
+    assertIsNotNullish(client);
 
     const fileName = `${recordingId}.webm`;
     const bucketName = "screening";
-    await upload.uploadFile(recordingState.blob, fileName, bucketName);
+    const videoUrl = await upload.uploadFile(
+      recordingState.blob,
+      fileName,
+      bucketName
+    );
+
+    const { data, error } = await client
+      .from("submissions")
+      .insert<Partial<UserProfile>>({
+        user_name: "KUBA",
+        bucket_video_url: videoUrl,
+        eleven_conversation_id: recordingId,
+      })
+      .select();
+
+    console.log(data, error);
   };
 
   if (upload.uploadedUrl) {
