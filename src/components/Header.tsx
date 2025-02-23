@@ -1,12 +1,11 @@
+
 import { cn } from "@/lib/utils";
-import { UserCircle, UserIcon } from "lucide-react";
+import { UserCircle } from "lucide-react";
 import { Button } from "./ui/button";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuItem,
 } from "./ui/dropdown-menu";
 import { Link } from "react-router-dom";
@@ -16,31 +15,20 @@ interface HeaderProps {
   children?: React.ReactNode;
 }
 
-export const Header = ({
-  children = <GenericHeaderContents />,
-  className,
-}: HeaderProps) => {
+export const Header = ({ className }: HeaderProps) => {
   return (
-    <header className="sticky h-16 top-0 left-0 right-0 px-4 bg-green-50/80 backdrop-blur-md border-b border-gray-500/20 z-20">
+    <header className="sticky h-16 top-0 left-0 right-0 px-4 bg-background/80 backdrop-blur-md border-b border-border z-20">
       <div
         className={cn(
-          "max-w-[800px] px-3 mx-auto h-full flex items-center justify-between",
+          "max-w-[800px] px-3 mx-auto h-full flex items-center justify-end",
           className
         )}
       >
-        {children}
         <UserSelect />
       </div>
     </header>
   );
 };
-
-export const GenericHeaderContents = () => (
-  <div className="flex h-full items-center gap-3">
-    <h1 className="text-xl font-semibold">Casting Session</h1>
-    <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
-  </div>
-);
 
 const UserSelect = () => (
   <DropdownMenu>
@@ -59,3 +47,4 @@ const UserSelect = () => (
     </DropdownMenuContent>
   </DropdownMenu>
 );
+
