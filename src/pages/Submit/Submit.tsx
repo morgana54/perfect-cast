@@ -78,7 +78,7 @@ export const SubmitWithoutLoad = ({ listing }: SubmitProps) => {
 
   useEffect(() => {
     if (stream && videoRef.current) {
-      videoRef.current.srcObject = stream;
+      videoRef.current.srcObject = stream;      
     }
   }, [stream, videoRef]);
 
@@ -127,6 +127,8 @@ export const SubmitWithoutLoad = ({ listing }: SubmitProps) => {
     await onStop();
     await onStart();
   }, [onStart, onStop]);
+
+
 
   return (
     <div>

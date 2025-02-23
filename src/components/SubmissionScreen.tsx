@@ -67,7 +67,7 @@ export const SubmissionScreen = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="aspect-square rounded-lg overflow-hidden">
               <img
-                src={`https://picsum.photos/seed/${submission.id}/800/800`}
+                src={`https://coltpedcrfibsozxvgvu.supabase.co/storage/v1/object/public/mock_actor_img//andre-sebastian-X6aMAzoVJzk-unsplash.jpg`}
                 alt={submission.user_name || "Anonymous Actor"}
                 className="w-full h-full object-cover"
               />

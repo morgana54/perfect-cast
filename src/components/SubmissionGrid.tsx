@@ -1,4 +1,3 @@
-
 import { Submission } from "@/supabase/types";
 import { Link } from "react-router-dom";
 
@@ -7,6 +6,8 @@ interface SubmissionGridProps {
 }
 
 export const SubmissionGrid = ({ submissions }: SubmissionGridProps) => {
+  const thumbnailUrl = "https://coltpedcrfibsozxvgvu.supabase.co/storage/v1/object/public/mock_actor_img//andre-sebastian-X6aMAzoVJzk-unsplash.jpg";
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       {submissions.map((submission) => (
@@ -17,7 +18,7 @@ export const SubmissionGrid = ({ submissions }: SubmissionGridProps) => {
         >
           <div className="aspect-video relative overflow-hidden">
             <img
-              src={`https://picsum.photos/seed/${submission.id}/800/450`}
+              src={thumbnailUrl}
               alt={submission.user_name || "Anonymous Actor"}
               className="w-full h-full object-cover transition-transform group-hover:scale-105"
             />
