@@ -15,20 +15,31 @@ interface HeaderProps {
   children?: React.ReactNode;
 }
 
-export const Header = ({ className }: HeaderProps) => {
+export const Header = ({
+  children = <GenericHeaderContents />,
+  className,
+}: HeaderProps) => {
   return (
     <header className="sticky h-16 top-0 left-0 right-0 px-4 bg-background/80 backdrop-blur-md border-b border-border z-20">
       <div
         className={cn(
-          "max-w-[800px] px-3 mx-auto h-full flex items-center justify-end",
+          "max-w-[800px] px-3 mx-auto h-full flex items-center justify-between",
           className
         )}
       >
+        {children}
         <UserSelect />
       </div>
     </header>
   );
 };
+
+export const GenericHeaderContents = () => (
+  <div className="flex h-full items-center gap-3">
+    <h1 className="text-xl font-semibold">Casting Session</h1>
+    <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
+  </div>
+);
 
 const UserSelect = () => (
   <DropdownMenu>
@@ -47,4 +58,3 @@ const UserSelect = () => (
     </DropdownMenuContent>
   </DropdownMenu>
 );
-

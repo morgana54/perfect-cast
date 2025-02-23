@@ -1,4 +1,5 @@
-import { Header } from "@/components/Header";
+
+import { GenericHeaderContents, Header } from "@/components/Header";
 import {
   TableCaption,
   TableHeader,
@@ -35,7 +36,9 @@ export const TalentListings = () => {
   if (!data) {
     return (
       <div>
-        <Header className="max-w-[1200px]" />
+        <Header className="max-w-[1200px]">
+          <GenericHeaderContents />
+        </Header>
         <div
           className="w-full flex items-center justify-center"
           style={{
@@ -50,7 +53,9 @@ export const TalentListings = () => {
 
   return (
     <div>
-      <Header className="max-w-[1200px]" />
+      <Header className="max-w-[1200px]">
+        <GenericHeaderContents />
+      </Header>
       <div className="max-w-[1200px] mx-auto mt-4">
         <div className="border rounded-md overflow-hidden">
           <Table>
